@@ -343,6 +343,7 @@
   "w3"  'spacemacs/layout-triple-columns
   "wb"  'spacemacs/switch-to-minibuffer-window
   "wd"  'delete-window
+  "we"  'spacemacs/rotate-split-window
   "wt"  'spacemacs/toggle-current-window-dedication
   "wf"  'follow-mode
   "wH"  'evil-window-move-far-left
@@ -363,6 +364,7 @@
   "w <right>"  'evil-window-right
   "wm"  'spacemacs/toggle-maximize-buffer
   "wM"  'spacemacs-centered-buffer-mode
+  "wO"  'new-frame
   "wo"  'other-frame
   "wr"  'spacemacs/rotate-windows
   "wR"  'spacemacs/rotate-windows-backward

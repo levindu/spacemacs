@@ -307,16 +307,16 @@ debug-init and load the given list of packages."
           "Do nothing, the display is handled by the powerline."))
       (setq window-numbering-auto-assign-0-to-minibuffer nil)
       (spacemacs/set-leader-keys
-        "0" 'select-window-0
+        "0" 'other-window
         "1" 'select-window-1
         "2" 'select-window-2
         "3" 'select-window-3
         "4" 'select-window-4
         "5" 'select-window-5
-        "6" 'select-window-6
-        "7" 'select-window-7
-        "8" 'select-window-8
-        "9" 'select-window-9)
+        "6" 'delete-window
+        "7" 'spacemacs/toggle-maximize-buffer
+        "8" 'split-window-below-and-focus
+        "9" 'split-window-right-and-focus)
       (window-numbering-mode 1))
 
     ;; make sure neotree is always 0

@@ -257,6 +257,50 @@ argument takes the kindows rotate backwards."
   (interactive "p")
   (spacemacs/rotate-windows (* -1 count)))
 
+(defun spacemacs/rotate-split-window--find (tree cur-win)
+  "Find the window-tree leaf containing cur-win."
+  (cl-loop for win in (nthcdr 2 tree)
+           for result = (cond ((listp win)
+                               (spacemacs/rotate-split-window--find win cur-win))
+                              ((eq win cur-win) tree))
+           when result return result))
+
+(defun spacemacs/rotate-split-window ()
+  "Rotate the split windows."
+  (interactive)
+  (let ((root (car (window-tree)))
+        (cur-win (selected-window))
+        (cur-win-found 0)
+        peer-win
+        tree)
+    (assert (listp root) nil "Root window not split")
+    (setq tree (spacemacs/rotate-split-window--find root cur-win))
+    ;; find peer win
+    (cl-loop for win in (nthcdr 2 tree)
+             do (cond ((listp win) nil)
+                      ((eq win cur-win)
+                       (setq cur-win-found 1))
+                      ((<= cur-win-found 1)
+                       (setq peer-win win)
+                       (when (= cur-win-found 1)
+                         (setq cur-win-found 2)))))
+    (assert peer-win nil "No peer window")
+    (let* ((win-cons (if (= cur-win-found 1)
+                          (cons peer-win cur-win)
+                        (cons cur-win peer-win)))
+           (w1 (car win-cons))
+           (w2 (cdr win-cons))
+           (b2 (window-buffer w2))
+           (s2 (window-start w2))
+           (p2 (window-point w2)))
+      (delete-window w2)
+      (select-window w1)
+      (setq w2 (if (car tree)           ; currently vertically split
+                   (split-window-horizontally)
+                 (split-window-vertically)))
+      (set-window-buffer-start-and-point w2 b2 s2 p2)
+      (select-window (if (= cur-win-found 1) w2 w1)))))
+
 (defun spacemacs/next-useful-buffer ()
   "Switch to the next buffer and avoid special buffers."
   (interactive)
