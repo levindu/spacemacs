@@ -84,6 +84,21 @@
                 #'spacemacs/save-eyebrowse-for-perspective)
       (add-hook 'persp-activated-functions
                 #'spacemacs/load-eyebrowse-for-perspective)
+      ;; Use ` as a speed key
+      (define-key evil-motion-state-map "`" nil)
+      (define-key evil-motion-state-map "``" 'evil-goto-mark)
+      (define-key evil-motion-state-map (kbd "` <tab>") 'eyebrowse-last-window-config)
+      (define-key evil-motion-state-map "` " 'spacemacs/workspaces-transient-state/body)
+      (define-key evil-motion-state-map "`1" 'eyebrowse-switch-to-window-config-1)
+      (define-key evil-motion-state-map "`2" 'eyebrowse-switch-to-window-config-2)
+      (define-key evil-motion-state-map "`3" 'eyebrowse-switch-to-window-config-3)
+      (define-key evil-motion-state-map "`4" 'eyebrowse-switch-to-window-config-4)
+      (define-key evil-motion-state-map "`5" 'eyebrowse-switch-to-window-config-5)
+      (define-key evil-motion-state-map "`6" 'eyebrowse-switch-to-window-config-6)
+      (define-key evil-motion-state-map "`7" 'eyebrowse-switch-to-window-config-7)
+      (define-key evil-motion-state-map "`8" 'eyebrowse-switch-to-window-config-8)
+      (define-key evil-motion-state-map "`9" 'eyebrowse-switch-to-window-config-9)
+      (define-key evil-motion-state-map "`0" 'eyebrowse-close-window-config)
       ;; vim-style tab switching
       (define-key evil-motion-state-map "gt" 'eyebrowse-next-window-config)
       (define-key evil-motion-state-map "gT" 'eyebrowse-prev-window-config))))
