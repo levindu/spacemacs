@@ -409,20 +409,16 @@
 
       (defun spacemacs//set-whitespace-style-for-diff ()
         "Whitespace configuration for `diff-mode'"
-        (setq-local whitespace-style '(face
-                                       tabs
-                                       tab-mark
-                                       spaces
-                                       space-mark
-                                       trailing
-                                       indentation::space
-                                       indentation::tab
-                                       newline
-                                       newline-mark)))
+        (setq-local whitespace-style '(face trailing)))
       (add-hook 'diff-mode-hook 'whitespace-mode)
       (add-hook 'diff-mode-hook 'spacemacs//set-whitespace-style-for-diff))
     :config
     (progn
+      (setq whitespace-style '(face trailing tabs tab-mark newline-mark)
+            whitespace-display-mappings
+            ;; all numbers are Unicode codepoint in decimal. try (insert-char 182 ) to see it
+            '((newline -mark 10 [?\u21A9 ?\n] [?\u00B6 ?\n]) ; 10 LINE FEED
+               (tab-mark 9 [?\u00BB ?\t] [?\\ ?\t])))
       (set-face-attribute 'whitespace-space nil
                           :background nil
                           :foreground (face-attribute 'font-lock-warning-face
