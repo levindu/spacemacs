@@ -28,6 +28,9 @@
 (if (and chinese-enable-fcitx (not (spacemacs/system-is-mswindows))) ;; disable in Windows
     (push 'fcitx chinese-packages))
 
+(when chinese-enable-calendar-lunar
+  (push 'calendar-lunar chinese-packages))
+
 (defun chinese/init-fcitx ()
   (use-package fcitx
     :init
@@ -112,3 +115,7 @@ unwanted space when exporting org-mode to html."
              (concat
               "\\(" fix-regexp "\\) *\n *\\(" fix-regexp "\\)") "\\1\\2" origin-contents)))
       (ad-set-arg 1 fixed-contents))))
+
+(defun chinese/init-calendar-lunar ()
+  (use-package calendar-lunar)
+  :defer t)
