@@ -68,7 +68,14 @@
   (use-package dired-x
     :commands (dired-jump
                dired-jump-other-window
-               dired-omit-mode)))
+               dired-omit-mode)
+    :config
+    (progn
+      (add-to-list 'dired-omit-extensions "_pycache__")
+      (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*")
+      (define-key dired-mode-map (kbd "/")  'spacemacs/dired-toggle-omit-mode)
+      ;; turn on dired-omit-mode by default
+      (add-hook 'dired-mode-hook 'spacemacs/dired-set-omit-mode))))
 
 (defun spacemacs-base/init-electric-indent-mode ()
   (electric-indent-mode))

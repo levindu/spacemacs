@@ -29,6 +29,8 @@
 (defvar spacemacs-useful-buffers-regexp '("\\*scratch\\*")
   "Regexp used to define buffers that are useful despite matching
 `spacemacs-useless-buffers-regexp'.")
+(defvar spacemacs-dired-turn-on-omit-mode t
+  "If t, turn on dired-omit-mode in dired.")
 
 ;; no beep pleeeeeease ! (and no visual blinking too please)
 (setq ring-bell-function 'ignore

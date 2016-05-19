@@ -1000,3 +1000,12 @@ is nonempty."
   (when compilation-last-buffer
     (delete-windows-on compilation-last-buffer)))
 
+(defun spacemacs/dired-toggle-omit-mode ()
+  (interactive)
+  (setq spacemacs-dired-turn-on-omit-mode
+        (not spacemacs-dired-turn-on-omit-mode))
+  (spacemacs/dired-set-omit-mode))
+
+(defun spacemacs/dired-set-omit-mode ()
+  (dired-omit-mode (if spacemacs-dired-turn-on-omit-mode
+                       1 0)))
