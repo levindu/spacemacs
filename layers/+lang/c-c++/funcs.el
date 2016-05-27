@@ -50,3 +50,15 @@ and the arguments for flyckeck-clang based on a project-specific text file."
       (setq-local company-clang-arguments flags)
       (setq-local company-c-headers-path-system (append '("/usr/include" "/usr/local/include") dirs))
       (setq-local flycheck-clang-args flags))))
+
+(defun spacemacs/indent-c(start end)
+  "Invoke indent to format c code."
+  (interactive (if mark-active
+                   (list (region-beginning) (region-end))
+                 (list (point-min) (point-max))))
+  (let ((indent (executable-find "indent")))
+    (if indent
+        (shell-command-on-region start end
+                                 (concat "indent " c-c++-indent-c-style)
+                                 t t)
+      (error "program 'indent' not found!"))))

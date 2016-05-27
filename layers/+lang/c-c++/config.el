@@ -19,3 +19,8 @@
 
 (defvar c-c++-default-mode-for-headers 'c-mode
   "Default mode to open header files. Can be `c-mode' or `c++-mode'.")
+
+(defvar c-c++-indent-c-style
+  "-kr -bl -bls -nce -bli0 -cdw -nut"
+  "Style used in indent program to format c code."
+  )

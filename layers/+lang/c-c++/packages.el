@@ -40,7 +40,8 @@
       (c-toggle-auto-newline 1)
       (spacemacs/set-leader-keys-for-major-mode 'c-mode
         "ga" 'projectile-find-other-file
-        "gA" 'projectile-find-other-file-other-window)
+        "gA" 'projectile-find-other-file-other-window
+        "gi" 'spacemacs/indent-c)
       (spacemacs/set-leader-keys-for-major-mode 'c++-mode
         "ga" 'projectile-find-other-file
         "gA" 'projectile-find-other-file-other-window))))
