@@ -11,6 +11,7 @@
 
 (setq spacemacs-editing-packages
       '(aggressive-indent
+        anzu
         avy
         (bracketed-paste :toggle (version<= emacs-version "25.0.92"))
         clean-aindent-mode
@@ -50,6 +51,16 @@
     (progn
       (add-hook 'diff-auto-refine-mode-hook 'spacemacs/toggle-aggressive-indent-off)
       (spacemacs|diminish aggressive-indent-mode " Ⓘ" " I"))))
+
+
+(defun spacemacs-editing/init-anzu ()
+  (use-package anzu
+    :defer t
+    :commands (anzu-query-replace anzu-query-replace-regexp)
+    :init
+    (progn
+      (global-set-key (kbd "M-%") 'anzu-query-replace)
+      (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp))))
 
 (defun spacemacs-editing/init-avy ()
   (use-package avy
