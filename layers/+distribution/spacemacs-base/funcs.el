@@ -994,6 +994,32 @@ is nonempty."
         do (setq start (match-end 0))
         finally return count))
 
+(defun spacemacs/compile (&optional prompt)
+  "Save buffers and start compilation at background.
+
+Compile command will not be prompted unless prefix argment is provided.
+When compilation is finished, display the result buffer.
+
+Do not forget to add:
+  (add-hook 'compilation-finish-functions 'spacemacs/compile-on-finish)"
+  (interactive "P")
+  (if prompt
+      (call-interactively 'compile)
+    (let* ((compilation-ask-about-save nil)
+           (compilation-buffer-name "*compilation*")
+           (comp-proc (get-buffer-process (get-buffer compile-buffer-name))))
+      (if (and comp-proc (eq (process-status comp-proc) 'run))
+          (display-buffer compilation-buffer-name)
+        (save-window-excursion
+          (recompile)
+          (message (concat "Compiling: " compile-command)))))))
+
+(defun spacemacs/compile-on-finish (buffer msg)
+  "Notify that the compilation is finished."
+  (with-current-buffer buffer
+    (when (eq major-mode 'compilation-mode)
+        (display-buffer buffer))))
+
 (defun spacemacs/close-compilation-window ()
   "Close the window containing the '*compilation*' buffer."
   (interactive)

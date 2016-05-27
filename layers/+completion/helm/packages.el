@@ -455,7 +455,7 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
     :defer t
     :init
     (spacemacs/set-leader-keys
-      "cc" 'helm-make-projectile
+      "cC" 'helm-make-projectile
       "cm" 'helm-make)))
 
 (defun helm/init-helm-mode-manager ()

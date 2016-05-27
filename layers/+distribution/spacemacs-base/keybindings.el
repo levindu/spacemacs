@@ -201,9 +201,9 @@
 
 ;; Compilation ----------------------------------------------------------------
 (spacemacs/set-leader-keys
-  "cC" 'compile
+  "cc" 'spacemacs/compile
   "ck" 'kill-compilation
-  "cr" 'recompile
+  "cr" 'compile
   "cd" 'spacemacs/close-compilation-window)
 (with-eval-after-load 'compile
   (define-key compilation-mode-map "r" 'recompile)

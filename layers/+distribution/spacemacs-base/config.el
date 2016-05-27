@@ -63,6 +63,7 @@ It runs `tabulated-list-revert-hook', then calls `tabulated-list-print'."
 
 ;; Scroll compilation to first error or end
 (setq compilation-scroll-output 'first-error)
+(add-hook 'compilation-finish-functions 'spacemacs/compile-on-finish)
 
 ;; ---------------------------------------------------------------------------
 ;; Edit
