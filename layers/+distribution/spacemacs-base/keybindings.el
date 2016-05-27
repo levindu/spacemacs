@@ -126,6 +126,7 @@
   "b C-k" 'spacemacs/kill-matching-buffers-rudely
   "bP"  'spacemacs/copy-clipboard-to-whole-buffer
   "bn"  'spacemacs/next-useful-buffer
+  "bl"  'spacemacs/next-same-mode-buffer
   "bN"  'spacemacs/new-empty-buffer
   "bp"  'spacemacs/previous-useful-buffer
   "bR"  'spacemacs/safe-revert-buffer
@@ -160,7 +161,8 @@
   "fvd" 'add-dir-local-variable
   "fvf" 'add-file-local-variable
   "fvp" 'add-file-local-variable-prop-line
-  "fy" 'spacemacs/show-and-copy-buffer-filename)
+  "fy" 'spacemacs/show-and-copy-buffer-filename
+  "fY" 'spacemacs/show-and-copy-more-buffer-filename-context)
 ;; help -----------------------------------------------------------------------
 (spacemacs/set-leader-keys
   "hdb" 'describe-bindings
@@ -428,6 +430,7 @@
   ("n" spacemacs/next-useful-buffer "next")
   ("N" spacemacs/previous-useful-buffer "previous")
   ("p" spacemacs/previous-useful-buffer "previous")
+  ("l" spacemacs/next-same-mode-buffer "same mode")
   ("K" kill-this-buffer "kill")
   ("q" nil "quit" :exit t))
 (spacemacs/set-leader-keys "b." 'spacemacs/buffer-transient-state/body)

@@ -415,6 +415,47 @@ argument takes the kindows rotate backwards."
         (message (kill-new file-name))
       (error "Buffer not visiting a file"))))
 
+(defun spacemacs/show-and-copy-more-buffer-filename-context ()
+  "Copy more context of the current buffer in the minibuffer."
+  (interactive)
+  ;; list-buffers-directory is the variable set in dired buffers
+  (let* ((file-path (or (buffer-file-name) list-buffers-directory))
+         file-name
+         (line-no (line-number-at-pos))
+         (func (progn (require 'which-func) (which-function)))
+         (project-root (ignore-errors (projectile-project-root)))
+         result)
+    (when file-path
+      (setq file-name (file-name-nondirectory file-path))
+      (push file-path result)
+      (push file-name result)
+      (push (file-name-directory file-path) result)
+      (when project-root
+        ;; if in project, use relative path in it
+        (setq file-path (file-relative-name file-path project-root))
+        (push file-path result)
+        (push (file-name-directory file-path) result))
+      (push (format "%s:%s" file-path line-no) result))
+    (when func
+      (when (string-match "(\\([^)]+\\))" func)
+        (setq func (match-string 1 func)))
+      (push func result)
+      (when file-path
+        (push (format "%s(%s)" func file-path) result)
+        (push (format "%s:%s" func line-no) result)
+        (push (format "%s:%s:%s" file-path func line-no) result)))
+    (when (eq major-mode 'java-mode)
+      (let ((package (save-excursion
+                       (goto-char (point-min))
+                       (when (search-forward-regexp
+                              "^\\s-*package\\s-+\\(.+?\\)\\s-*;\\s-*$" nil t)
+                         (match-string-no-properties 1)))))
+        (when package
+          (push (format "%s:%s" package line-no) result)
+          (when func
+            (push (format "%s:%s:%s" package func line-no) result)))))
+    (kill-new (completing-read "Select: " result))))
+
 ;; adapted from bozhidar
 ;; http://emacsredux.com/blog/2013/05/18/instant-access-to-init-dot-el/
 (defun spacemacs/find-user-init-file ()
@@ -754,10 +795,16 @@ the right."
   (interactive)
   (set-buffer-file-coding-system 'undecided-dos nil))
 
-(defun spacemacs/copy-file ()
-  "Write the file under new name."
-  (interactive)
-  (call-interactively 'write-file))
+(defun spacemacs/copy-file (dest-file)
+  (interactive "GCopy to file:")
+  (unless (buffer-file-name)
+    (error "Not file."))
+  (when (file-directory-p dest-file)
+    (setq dest-file (expand-file-name
+                     (file-name-nondirectory (buffer-file-name))
+                     dest-file)))
+  (copy-file (buffer-file-name) dest-file)
+  (find-file dest-file))
 
 (defun spacemacs//imagep (object)
   "Tests whether the given object is an image (a list whose
