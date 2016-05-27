@@ -30,3 +30,27 @@
     (if arg
         (insert-uuid-cid uuid)
       (insert uuid))))
+
+(defun spacemacs/insert-file-name ()
+  "Insert path interactively"
+  (interactive)
+  (let ((path (read-file-name "Insert: ")))
+    (insert path)))
+
+(defun spacemacs/insert-directory-name ()
+  "Insert path interactively"
+  (interactive)
+  (let ((path (read-directory-name "Insert: ")))
+    (insert path)))
+
+(defun spacemacs/insert-date ()
+  "Insert a timestamp according to locale's date and time format."
+  (interactive)
+  (let ((time-strs (mapcar (lambda (format)
+                             (format-time-string format))
+                           '("%c"
+                             "%Y-%m-%d %T"
+                             "%Y-%m-%d %T%z"
+                             "%Y-%m-%d"
+                             "%FT%T%z"))))
+    (insert (completing-read "Insert: " time-strs))))
