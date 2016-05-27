@@ -54,3 +54,44 @@
                              "%Y-%m-%d"
                              "%FT%T%z"))))
     (insert (completing-read "Insert: " time-strs))))
+
+(defvar spacemacs-smart-tab-keymap
+ (let ((map (make-sparse-keymap)))
+   (define-key map [(tab)]       'spacemacs/smart-tab)
+   (define-key map (kbd "TAB")   'spacemacs/smart-tab)
+   map))
+
+(define-minor-mode spacemacs-smart-tab-mode
+    "minor-mode which do smart work for tab key."
+    :init-value nil
+    :global     nil
+    :lighter    ""
+    :keymap spacemacs-smart-tab-keymap)
+
+(defun spacemacs/smart-tab ()
+  "Extension for indent-for-tab-command.
+
+No changes/indentation are made after calling
+indent-for-tab-command, then indent the sexp or remove empty
+lines where is neccessary.
+"
+  (interactive)
+  (let* ((old-tick (buffer-chars-modified-tick))
+         (old-point (point))
+         (tab-command
+          (let (spacemacs-smart-tab-mode)
+            (key-binding (kbd "TAB") t))))
+    (when tab-command
+         (call-interactively tab-command))
+    (when (and (eq old-point (point))
+               (eq old-tick (buffer-chars-modified-tick)))
+      (cond
+       ((looking-at "\\s\(")
+        (save-excursion
+          (indent-region (point)
+                         (save-excursion (forward-sexp) (point)))))
+       ((looking-back "[ \t]+$")
+        (delete-horizontal-space)
+        (delete-blank-lines)
+        (forward-line 1)
+        (back-to-indentation))))))
