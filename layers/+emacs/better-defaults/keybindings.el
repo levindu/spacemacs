@@ -10,4 +10,8 @@
 ;;; License: GPLv3
 
 (global-set-key (kbd "C-a") 'spacemacs/smart-move-beginning-of-line)
+(global-set-key (kbd "C-e") 'spacemacs/smart-move-end-of-line)
 (global-set-key (kbd "C-w") 'spacemacs/backward-kill-word-or-region)
+
+(define-key occur-mode-map "F" 'spacemacs/flush-lines)
+(define-key occur-mode-map "K" 'spacemacs/keep-lines)
